@@ -4,21 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Calculator and Converters</title>
+    <!-- Include Swup and Swup Fade Theme -->
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>
+    <script src="https://unpkg.com/@swup/fade-theme@latest/dist/swup-fade-theme.min.js"></script>
     <script src="scripts.js" defer></script>
 </head>
 <body>
-    <nav id='menu'>
-        <input type='checkbox' id='responsive-menu' onclick='toggleMenu("responsive-menu")'>
-        <label for='responsive-menu'></label>
-            <div id="logo-container"><img src="Buying Guidelogo.png" alt="logo" id="BG"></div>
+    <div id="swup" class="transition-fade"> <!-- Make sure this matches your Swup container -->
+        <nav id='menu'>
+            <input type='checkbox' id='responsive-menu' onclick='toggleMenu("responsive-menu")'>
+            <label for='responsive-menu'></label>
+            <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="Buying Guidelogo.png" alt="logo" id="BG"></div>
             <ul>
-                <li><a href="#" onclick="showPage('calculator')">USD to CAD Calculator</a></li>
+                <li><a href="#" onclick="showPage('calculator')">CAD Selling Price Calculator</a></li>
                 <li><a href="#" onclick="showPage('converter')">KM to Miles Converter</a></li>
-                <li id="PCB"><a id="PCB" href="#" onclick="showPage('carCalculator')">Profit Calculator</a></li>
+                <li id="PCB"><a id="PCB" href="#" onclick="showPage('carCalculator')">USD Selling Price Calculator</a></li>
             </ul>
-            <div id="logo-container"><img src="QASWHITELOGO.png" alt="logo" id="logo"></div>
-    </nav> 
+            <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="QASWHITELOGO.png" alt="logo" id="logo"></div>
+        </nav> 
+
 
     <div class="content">
         <!-- USD to CAD Calculator Page -->
@@ -29,7 +34,7 @@
                     <input type="text" id="vin" maxlength="7" placeholder="To Save Enter Last 6" oninput="formatVin()" inputmode="numeric" pattern="[0-9]*" onkeypress="return isNumberKey(event)" style="text-transform:uppercase">
                 </div>
                 <div class="form-group">
-                    <label for="usdPrice">USD PRICE</label>
+                    <label for="usdPrice">USD Selling Price</label>
                     <div class="input-container">
                         <input type="text" id="usdPrice" value="$ 0" inputmode="numeric" oninput="formatAndCalculate('usdPrice')" onkeypress="return isNumberKey(event)">
                         <div class="spinner-button spinner-up" onclick="incrementInput('usdPrice', 100)">▲</div>
@@ -37,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exchangeRate">Exchange Rate</label>
+                    <label for="exchangeRate">FX Rate (CAD to USD)</label>
                     <div class="input-container">
                         <input type="number" id="exchangeRate" step="0.01" value="1.36" inputmode="numeric" oninput="calculateCadPrice()" onkeypress="return isNumberKey(event)">
                         <div class="spinner-button spinner-up" onclick="incrementInput('exchangeRate', 0.01)">▲</div>
@@ -53,7 +58,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="profit">Profit</label>
+                    <label for="profit">Desired Profit</label>
                     <div class="input-container">
                         <input type="text" id="profit" value="$ 0" inputmode="numeric" oninput="formatAndCalculate('profit')" onkeypress="return isNumberKey(event)">
                         <div class="spinner-button spinner-up" onclick="incrementInput('profit', 250)">▲</div>
@@ -61,7 +66,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="cadPrice">CAD PRICE</label>
+                    <label for="cadPrice">CAD BUYING PRICE</label>
                     <input type="text" id="cadPrice" readonly>
                 </div>
                 <div class="actions">
@@ -99,6 +104,14 @@
                         <input type="text" id="desiredProfit" value="$ 0" inputmode="numeric" oninput="formatAndCalculateCar('desiredProfit')" onkeypress="return isNumberKey(event)">
                         <div class="spinner-button spinner-up" onclick="incrementCarInput('desiredProfit', 100)">▲</div>
                         <div class="spinner-button spinner-down" onclick="incrementCarInput('desiredProfit', -100)">▼</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Expenses2">Expenses</label>
+                    <div class="input-container">
+                        <input type="text" id="Expenses2" value="$ 0" inputmode="numeric" oninput="formatAndCalculateCar('Expenses2')" onkeypress="return isNumberKey(event)">
+                        <div class="spinner-button spinner-up" onclick="incrementCarInput('Expenses2', 100)">▲</div>
+                        <div class="spinner-button spinner-down" onclick="incrementCarInput('Expenses2', -100)">▼</div>
                     </div>
                 </div>
                 <div class="form-group">

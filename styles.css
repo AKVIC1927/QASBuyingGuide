@@ -23,10 +23,7 @@ body {
     list-style: none;
     background: #3663A0;
 }
-#PCB {
-    border-bottom-left-radius:15px;
-    border-bottom-right-radius:15px;
-}
+
 #menu ul {
 	width: 100%;
 	text-align: center;
@@ -99,7 +96,7 @@ body {
 	color: #3663A0;
 }
 @media screen and (max-width: 800px){
-	#menu {position:relative}
+	#menu {position:relative;border-radius: 15px;}
 	#menu ul {background:#3663A0;top:100%;right:0;left:0;z-index:3;height:auto;display:none;text-align:left;}
 	#menu ul.sub-menus {background:#3663A0;width:100%;position:static;}
 	#menu ul.sub-menus a {background:#3663A0;padding-left:30px;}
@@ -110,19 +107,23 @@ body {
 	#menu input:checked + label:before {content:"\00d7"}
 	#menu input:checked ~ ul {display:block}
     #BG {display: none;}
-    #logo { margin-left: 0px;}
+    #logo { margin-left: 0;}
+    #PCB {
+        border-bottom-left-radius:15px;
+        border-bottom-right-radius:15px;
+    }
 }
 
 #logo {
     border-radius: 10px;
     height: 40px;
-    margin-left: 20px;
+    
 }
 
 #BG {
     border-radius: 10px;
     height: 40px;
-    margin-right: 20px;
+    
 }
 
 .content {
@@ -398,3 +399,5 @@ body {
         width: 55%;
     }
 }
+
+

@@ -1,3 +1,5 @@
+
+
 function showPage(page) {
     document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
         container.style.display = 'none';
@@ -42,9 +44,10 @@ function calculateCadPrice() {
 
 function calculateUsdSellingPrice() {
     const cadBoughtPrice = parseFormattedNumber(document.getElementById('cadBoughtPrice').value) || 0;
+    const Expenses2 = parseFormattedNumber(document.getElementById('Expenses2').value) || 0;
     const desiredProfit = parseFormattedNumber(document.getElementById('desiredProfit').value) || 0;
     const fxRate = parseFloat(document.getElementById('fxRate').value) || 0;
-    const usdSellingPrice = Math.ceil((cadBoughtPrice + desiredProfit) / fxRate);
+    const usdSellingPrice = Math.ceil((cadBoughtPrice + Expenses2 +desiredProfit) / fxRate);
     document.getElementById('usdSellingPrice').value = formatNumber(usdSellingPrice);
 }
 
@@ -94,6 +97,7 @@ function resetForm() {
 function resetCarForm() {
     document.getElementById('cadBoughtPrice').value = '$ 0';
     document.getElementById('desiredProfit').value = '$ 0';
+    document.getElementById('Expenses2').value = '$ 0';
     document.getElementById('fxRate').value = '1.36';
     document.getElementById('usdSellingPrice').value = '';
 }
@@ -186,40 +190,59 @@ calculateCadPrice();
 showPage('calculator'); // Default page to show
 
 function toggleMenu(clickedMenuId) {
+    // Get all checkboxes that control menus
     const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
 
+    // Iterate over all checkboxes
     checkboxes.forEach(checkbox => {
+        // Close other menus if they are open
         if (checkbox.id !== clickedMenuId) {
             checkbox.checked = false;
         }
     });
 
+    // Adjust menu styling based on the current checkbox state
     const clickedCheckbox = document.getElementById(clickedMenuId);
     const menu = document.getElementById('menu');
 
     if (clickedCheckbox.checked) {
-        menu.style.borderBottomRightRadius = '0';
-        menu.style.borderBottomLeftRadius = '0';
+        menu.style.borderBottomRightRadius = '15px';
+        menu.style.borderBottomLeftRadius = '15px';
     } else {
         menu.style.borderRadius = '15px';
     }
 }
 
+// Close the menu if clicked outside
 document.addEventListener('click', function(event) {
     const menu = document.getElementById('menu');
     const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
 
+    // Check if the click is outside the menu
     if (!menu.contains(event.target)) {
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 checkbox.checked = false;
-                menu.style.borderRadius = '15px';
+                menu.style.borderRadius = '15px'; // Reset border radius
             }
         });
     }
 });
 
+function showPage(page) {
+    // Hide all containers first
+    document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
+        container.style.display = 'none';
+    });
 
+    // Display the selected page
+    document.getElementById(page).style.display = 'flex';
 
+    // Close the menu by unchecking the checkbox
+    document.getElementById('responsive-menu').checked = false;
 
-  
+    // Reset the menu border-radius
+    const menu = document.getElementById('menu');
+    menu.style.borderRadius = '15px';
+}
+
