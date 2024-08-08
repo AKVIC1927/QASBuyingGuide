@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Calculator and Converters</title>
-    <!-- Include Swup and Swup Fade Theme -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>
     <script src="https://unpkg.com/@swup/fade-theme@latest/dist/swup-fade-theme.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> <!-- jQuery -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
     <script src="scripts.js" defer></script>
 </head>
 <body>
-    <div id="swup" class="transition-fade"> <!-- Make sure this matches your Swup container -->
+    <div id="swup" class="transition-fade"> 
         <nav id='menu'>
             <input type='checkbox' id='responsive-menu' onclick='toggleMenu("responsive-menu")'>
             <label for='responsive-menu'></label>
             <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="Buying Guidelogo.png" alt="logo" id="BG"></div>
             <ul>
                 <li><a href="#" onclick="showPage('calculator')">CAD Selling Price Calculator</a></li>
-                <li><a href="#" onclick="showPage('converter')">KM to Miles Converter</a></li>
+                <li><a href="#" onclick="showPage('converter')">Converter</a></li>
                 <li id="PCB"><a id="PCB" href="#" onclick="showPage('carCalculator')">USD Selling Price Calculator</a></li>
             </ul>
             <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="QASWHITELOGO.png" alt="logo" id="logo"></div>
         </nav> 
 
-
     <div class="content">
-        <!-- USD to CAD Calculator Page -->
         <div class="container" id="calculator">
             <div class="form-container">
                 <div class="form-group">
@@ -78,14 +78,39 @@
 
         <!-- KM to Miles Converter Page -->
         <div class="converter-container" id="converter">
-            <label for="kmInput">KM to Miles</label>
-            <div class="input-container">
-                <input type="text" id="kmInput" placeholder="0" inputmode="numeric" oninput="convertKmToMiles()" onkeypress="return isNumberKey(event)">
-                <div class="spinner-button spinner-up" onclick="incrementKm(10)">▲</div>
-                <div class="spinner-button spinner-down" onclick="incrementKm(-10)">▼</div>
+            <!-- KM to Miles Converter -->
+            <div class="KMTOMILES">
+                <h2>
+                    <a data-toggle="collapse" href="#kmCollapse" role="button" aria-expanded="false" aria-controls="kmCollapse" 
+                    onclick="toggleIcon(this)"><span class="triangle">&#9654;</span> KM to Miles</a>
+                </h2>
+                <div class="collapse" id="kmCollapse">
+                    <div class="input-container">
+                        <input type="text" id="kmInput" placeholder="0" inputmode="numeric" oninput="convertKmToMiles()" onkeypress="return isNumberKey(event)">
+                        <div class="spinner-button spinner-up" onclick="incrementKm(10)">▲</div>
+                        <div class="spinner-button spinner-down" onclick="incrementKm(-10)">▼</div>
+                    </div>
+                    <p id="milesOutput">Miles: 0</p>
+                </div>
             </div>
-            <p id="milesOutput">Miles: 0</p>
+        
+            <!-- KG to Pounds Converter -->
+            <div class="KGTOLBS">
+                <h2>
+                    <a data-toggle="collapse" href="#kgCollapse" role="button" aria-expanded="false" aria-controls="kgCollapse" 
+                    onclick="toggleIcon(this)"> <span class="triangle">&#9654;</span> KG to Pounds</a>
+                </h2>
+                <div class="collapse" id="kgCollapse">
+                    <div class="input-container">
+                        <input type="text" id="KgInput" placeholder="0" inputmode="numeric" oninput="convertKgToLbs()" onkeypress="return isNumberKey(event)">
+                        <div class="spinner-button spinner-up" onclick="incrementKg(10)">▲</div>
+                        <div class="spinner-button spinner-down" onclick="incrementKg(-10)">▼</div>
+                    </div>
+                    <p id="LBSOutput">Pounds: 0</p>
+                </div>
+            </div>
         </div>
+        
 
         <!-- Car Buying Calculator Page -->
         <div class="car-calculator-container" id="carCalculator">
@@ -144,7 +169,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Entries will be dynamically added here -->
+               
             </tbody>
         </table>
     </div>

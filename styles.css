@@ -1,3 +1,4 @@
+/* Existing CSS */
 body {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
@@ -9,103 +10,115 @@ body {
     flex-direction: column;
 }
 
+#swup{
+    display: grid;
+}
+
 #menu {
-	background: #3663A0;
-	height: 40px;
-	border-radius: 15px;
+    background: #3663A0;
+    height: 40px;
+    border-radius: 15px;
     display: flex;
     width: max-content;
-
+    max-width: 100vw;
 }
+
 #menu ul, #menu li {
-	margin: 0 auto;
-	padding: 0;
+    margin: 0 auto;
+    padding: 0;
     list-style: none;
     background: #3663A0;
 }
 
 #menu ul {
-	width: 100%;
-	text-align: center;
+    width: 100%;
+    text-align: center;
 }
 #menu li {
-	display: inline-block;
-	position: relative;
+    display: inline-block;
+    position: relative;
 }
 #menu a {
-	display: block;
-	line-height: 40px;
-	padding: 0 14px;
-	text-decoration: none;
-	color: #FFFFFF;
-	font-size: 16px;
-	text-transform: capitalize;
+    display: block;
+    line-height: 40px;
+    padding: 0 14px;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    text-transform: capitalize;
 }
 #menu a.dropdown-arrow:after {
-	content: "\25BE";
-	margin-left: 5px;
+    content: "\25BE";
+    margin-left: 5px;
 }
 #menu li a:hover {
-	color: #FFFFFF;
-	background: #3BBC2F;
+    color: #FFFFFF;
+    background: #3BBC2F;
 }
 #menu input {
-	display: none;
-	margin: 10px;
-	padding: 0;
-	height: 40px;
-	opacity: 0;
-	cursor: pointer
+    display: none;
+    margin: 10px;
+    padding: 0;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer
 }
 #menu label {
-	display: none;
-	line-height: 40px;
-	text-align: center;
-	position: absolute;
-	left: 35px
+    display: none;
+    line-height: 40px;
+    text-align: center;
+    position: absolute;
+    left: 35px
 }
 #menu label:before {
-	font-size: 1.6em;
-	color: #FFFFFF;
-	content: "\2261"; 
-	margin-left: 10px;
+    font-size: 1.6em;
+    color: #FFFFFF;
+    content: "\2261"; 
+    margin-left: 10px;
 }
 #menu ul.sub-menus{
-	height: auto;
-	overflow: hidden;
-	width: 170px;
-	background: #3663A0;
-	position: absolute;
-	z-index: 99;
-	display: none;
+    height: auto;
+    overflow: hidden;
+    width: 100vw;
+    background: #3663A0;
+    position: absolute;
+    z-index: 99;
+    display: none;
 }
 #menu ul.sub-menus li {
-	display: block;
-	text-align: left;
-	width: 100%;
+    display: block;
+    text-align: left;
+    width: 100%;
 }
 #menu ul.sub-menus a {
-	color: #FFFFFF;
-	font-size: 16px;
+    color: #FFFFFF;
+    font-size: 16px;
 }
 #menu li:hover ul.sub-menus {
-	display: block
+    display: block
 }
 #menu ul.sub-menus a:hover{
-	background: #F2F2F2;
-	color: #3663A0;
+    background: #F2F2F2;
+    color: #3663A0;
 }
-@media screen and (max-width: 800px){
-	#menu {position:relative;border-radius: 15px;}
-	#menu ul {background:#3663A0;top:100%;right:0;left:0;z-index:3;height:auto;display:none;text-align:left;}
-	#menu ul.sub-menus {background:#3663A0;width:100%;position:static;}
-	#menu ul.sub-menus a {background:#3663A0;padding-left:30px;}
-	#menu li {display:block;float:none;width:auto;}
-	#menu input, #menu label {top:0;left:0;display:block}
-	#menu input {z-index:4}
-	#menu input:checked + label {color:#FFFFFF}
-	#menu input:checked + label:before {content:"\00d7"}
-	#menu input:checked ~ ul {display:block}
+
+#KMTOMILES {
+    width: 100%;
+}
+
+
+@media screen and (max-width: 900px){
+    #swup {display: grid;}
+    #menu {position:relative;border-radius: 15px; justify-self:center;}
+    #menu ul {background:#3663A0;top:100%;right:0;left:0;z-index:3;height:auto;display:none;text-align:left;}
+    #menu ul.sub-menus {background:#3663A0;width:100%;position:static;}
+    #menu ul.sub-menus a {background:#3663A0;padding-left:30px;}
+    #menu li {display:block;float:none;width:auto;}
+    #menu input, #menu label {top:0;left:0;display:block}
+    #menu input {z-index:4}
+    #menu input:checked + label {color:#FFFFFF}
+    #menu input:checked + label:before {content:"\00d7"}
+    #menu input:checked ~ ul {display:block}
     #BG {display: none;}
     #logo { margin-left: 0;}
     #PCB {
@@ -118,6 +131,12 @@ body {
     border-radius: 10px;
     height: 40px;
     
+}
+
+a {
+    color: white;
+    display: flex;
+    align-items: center;
 }
 
 #BG {
@@ -145,12 +164,11 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80vw;
-    max-width: 400px;
+    max-width: 900px;
     box-sizing: border-box;
-    display: none; /* Initially hidden */
+    display: none; 
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .form-container,
@@ -248,6 +266,7 @@ body {
 }
 
 .last-entries {
+    justify-self: center;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -291,6 +310,14 @@ body {
     margin-top: 20px;
 }
 
+.converter-container.initial {
+    width: max-content;
+}
+
+.converter-container.collapsed {
+    width: max-content;
+}
+
 .converter-container label {
     display: block;
     margin-bottom: 5px;
@@ -316,6 +343,10 @@ body {
     appearance: none;
     box-sizing: border-box;
     font-size: 1rem; /* Responsive font size */
+}
+
+#milesOutput, #LBSOutput {
+    margin: 1rem;
 }
 
 .car-calculator-container {
@@ -388,16 +419,14 @@ body {
     border-radius: 0 0 4px 0;
 }
 
-@media (min-width: 768px) {
-    .container,
-    .converter-container,
-    .car-calculator-container {
-        flex-direction: row;
-    }
-    .form-container {
-        margin-right: 20px;
-        width: 55%;
-    }
+
+.KMTOMILES {
+    display: inline-flex;
+    flex-direction: column;
 }
 
-
+.triangle {
+    font-size: 0.5em;
+    margin-left: 5px;
+    margin-right: 5px;
+}

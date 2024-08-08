@@ -1,4 +1,19 @@
+function toggleIcon(element) {
+    const triangle = element.querySelector('.triangle');
+    const collapseElement = document.getElementById(element.getAttribute('aria-controls'));
+    const container = collapseElement.closest('.converter-container');
 
+    if (collapseElement.classList.contains('show')) {
+        triangle.innerHTML = '&#9654;'; // Right-pointing triangle
+        container.classList.add('collapsed');
+    } else {
+        triangle.innerHTML = '&#9660;'; // Down-pointing triangle
+        container.classList.remove('collapsed');
+    }
+}
+
+calculateCadPrice();
+showPage('calculator'); 
 
 function showPage(page) {
     document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
@@ -157,6 +172,33 @@ function incrementKm(amount) {
     convertKmToMiles();
 }
 
+function convertKgToLbs() {
+    const KgInput = document.getElementById('KgInput');
+    let Kg = KgInput.value.replace(/\s+/g, '');
+    if (Kg === '') return;
+    Kg = parseInt(Kg.replace(/[^0-9]/g, ''), 10);
+    if (Kg > 999999) {
+        Kg = 999999;
+    }
+    KgInput.value = formatNumberNoSymbol(Kg);
+    const lbs = Kg * 2.205;
+    document.getElementById('LBSOutput').innerText = "Pounds: " + formatNumberNoSymbol(lbs.toFixed(0));
+}
+
+function incrementKg(amount) {
+    const KgInput = document.getElementById('KgInput');
+    let Kg = KgInput.value.replace(/\s+/g, '');
+    Kg = parseInt(Kg.replace(/[^0-9]/g, ''), 10) || 0;
+    Kg += amount;
+    if (Kg > 999999) {
+        Kg = 999999;
+    } else if (Kg < 0) {
+        Kg = 0;
+    }
+    KgInput.value = formatNumberNoSymbol(Kg);
+    convertKgToLbs();
+}
+
 function formatVin() {
     const vinInput = document.getElementById('vin');
     let vinValue = vinInput.value.replace(/\s+/g, ''); // Remove all spaces
@@ -185,23 +227,15 @@ function copyTableToClipboard() {
     alert('Table copied to clipboard');
 }
 
-// Initial setup
-calculateCadPrice();
-showPage('calculator'); // Default page to show
-
 function toggleMenu(clickedMenuId) {
-    // Get all checkboxes that control menus
     const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
 
-    // Iterate over all checkboxes
     checkboxes.forEach(checkbox => {
-        // Close other menus if they are open
         if (checkbox.id !== clickedMenuId) {
             checkbox.checked = false;
         }
     });
 
-    // Adjust menu styling based on the current checkbox state
     const clickedCheckbox = document.getElementById(clickedMenuId);
     const menu = document.getElementById('menu');
 
@@ -213,36 +247,53 @@ function toggleMenu(clickedMenuId) {
     }
 }
 
-// Close the menu if clicked outside
 document.addEventListener('click', function(event) {
     const menu = document.getElementById('menu');
     const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
 
-    // Check if the click is outside the menu
     if (!menu.contains(event.target)) {
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 checkbox.checked = false;
-                menu.style.borderRadius = '15px'; // Reset border radius
+                menu.style.borderRadius = '15px';
             }
         });
     }
 });
 
 function showPage(page) {
-    // Hide all containers first
     document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
         container.style.display = 'none';
     });
-
-    // Display the selected page
     document.getElementById(page).style.display = 'flex';
-
-    // Close the menu by unchecking the checkbox
     document.getElementById('responsive-menu').checked = false;
-
-    // Reset the menu border-radius
     const menu = document.getElementById('menu');
     menu.style.borderRadius = '15px';
 }
 
+function toggleIcon(element) {
+    const triangle = element.querySelector('.triangle');
+    const collapseElement = document.getElementById(element.getAttribute('aria-controls'));
+    const container = collapseElement.closest('.converter-container');
+
+    if (collapseElement.classList.contains('show')) {
+        triangle.innerHTML = '&#9654;'; // Right-pointing triangle
+        container.classList.add('collapsed');
+    } else {
+        triangle.innerHTML = '&#9660;'; // Down-pointing triangle
+        container.classList.remove('collapsed');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.converter-container').forEach(container => {
+        container.classList.add('initial');
+    });
+});
+
+var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+var collapseList = collapseElementList.map(function (collapseEl) {
+  return new bootstrap.Collapse(collapseEl, {
+    toggle: false
+  })
+})
