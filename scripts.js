@@ -1,19 +1,48 @@
-function toggleIcon(element) {
-    const triangle = element.querySelector('.triangle');
-    const collapseElement = document.getElementById(element.getAttribute('aria-controls'));
-    const container = collapseElement.closest('.converter-container');
-
-    if (collapseElement.classList.contains('show')) {
-        triangle.innerHTML = '&#9654;'; // Right-pointing triangle
-        container.classList.add('collapsed');
-    } else {
-        triangle.innerHTML = '&#9660;'; // Down-pointing triangle
-        container.classList.remove('collapsed');
-    }
-}
+const apiKey = '3affe54e205fe5a146a1fcd4';
 
 calculateCadPrice();
 showPage('calculator'); 
+
+async function fetchExchangeRate(fromCurrency, toCurrency) {
+    const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency}?apikey=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const rate = data.rates[toCurrency];
+        return rate;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return null; // Return null or a default value if the API call fails
+    }
+}
+
+async function calculateCadPrice() {
+    const usdPrice = parseFormattedNumber(document.getElementById('usdPrice').value) || 0;
+    const expenses = parseFormattedNumber(document.getElementById('expenses').value) || 0;
+    const profit = parseFormattedNumber(document.getElementById('profit').value) || 0;
+
+    let exchangeRate = await fetchExchangeRate('USD', 'CAD');
+    if (!exchangeRate) {
+        exchangeRate = 1.36; // Fallback exchange rate in case of error
+    }
+
+    const cadPrice = Math.ceil((usdPrice * exchangeRate) - (expenses + profit));
+    document.getElementById('cadPrice').value = formatNumber(cadPrice);
+}
+
+async function updateExchangeRateDisplay() {
+    let exchangeRate = await fetchExchangeRate('USD', 'CAD');
+    if (!exchangeRate) {
+        exchangeRate = 1.36; // Fallback exchange rate in case of error
+    }
+    document.getElementById('exchangeRate').value = exchangeRate.toFixed(2);
+}
+
+updateExchangeRateDisplay();
 
 function showPage(page) {
     document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
@@ -48,21 +77,12 @@ function formatAndCalculateCar(id) {
     calculateUsdSellingPrice();
 }
 
-function calculateCadPrice() {
-    const usdPrice = parseFormattedNumber(document.getElementById('usdPrice').value) || 0;
-    const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 0;
-    const expenses = parseFormattedNumber(document.getElementById('expenses').value) || 0;
-    const profit = parseFormattedNumber(document.getElementById('profit').value) || 0;
-    const cadPrice = Math.ceil((usdPrice * exchangeRate) - (expenses + profit));
-    document.getElementById('cadPrice').value = formatNumber(cadPrice);
-}
-
 function calculateUsdSellingPrice() {
     const cadBoughtPrice = parseFormattedNumber(document.getElementById('cadBoughtPrice').value) || 0;
     const Expenses2 = parseFormattedNumber(document.getElementById('Expenses2').value) || 0;
     const desiredProfit = parseFormattedNumber(document.getElementById('desiredProfit').value) || 0;
     const fxRate = parseFloat(document.getElementById('fxRate').value) || 0;
-    const usdSellingPrice = Math.ceil((cadBoughtPrice + Expenses2 +desiredProfit) / fxRate);
+    const usdSellingPrice = Math.ceil((cadBoughtPrice + Expenses2 + desiredProfit) / fxRate);
     document.getElementById('usdSellingPrice').value = formatNumber(usdSellingPrice);
 }
 
@@ -130,7 +150,7 @@ function saveEntry() {
     const last6Vin = vin.slice(-7);
 
     const table = document.getElementById('entriesTable').getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow(0);  // Insert new row at the top
+    const newRow = table.insertRow(0);
 
     const cell1 = newRow.insertCell(0);
     const cell2 = newRow.insertCell(1);
@@ -172,33 +192,6 @@ function incrementKm(amount) {
     convertKmToMiles();
 }
 
-function convertKgToLbs() {
-    const KgInput = document.getElementById('KgInput');
-    let Kg = KgInput.value.replace(/\s+/g, '');
-    if (Kg === '') return;
-    Kg = parseInt(Kg.replace(/[^0-9]/g, ''), 10);
-    if (Kg > 999999) {
-        Kg = 999999;
-    }
-    KgInput.value = formatNumberNoSymbol(Kg);
-    const lbs = Kg * 2.205;
-    document.getElementById('LBSOutput').innerText = "Pounds: " + formatNumberNoSymbol(lbs.toFixed(0));
-}
-
-function incrementKg(amount) {
-    const KgInput = document.getElementById('KgInput');
-    let Kg = KgInput.value.replace(/\s+/g, '');
-    Kg = parseInt(Kg.replace(/[^0-9]/g, ''), 10) || 0;
-    Kg += amount;
-    if (Kg > 999999) {
-        Kg = 999999;
-    } else if (Kg < 0) {
-        Kg = 0;
-    }
-    KgInput.value = formatNumberNoSymbol(Kg);
-    convertKgToLbs();
-}
-
 function formatVin() {
     const vinInput = document.getElementById('vin');
     let vinValue = vinInput.value.replace(/\s+/g, ''); // Remove all spaces
@@ -227,6 +220,33 @@ function copyTableToClipboard() {
     alert('Table copied to clipboard');
 }
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.log(`Service Worker registration failed: ${err}`));
+    });
+}
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBtn').style.display = 'block';
+});
+
+document.getElementById('installBtn').addEventListener('click', (e) => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+    });
+});
+
 function toggleMenu(clickedMenuId) {
     const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
 
@@ -238,62 +258,20 @@ function toggleMenu(clickedMenuId) {
 
     const clickedCheckbox = document.getElementById(clickedMenuId);
     const menu = document.getElementById('menu');
-
-    if (clickedCheckbox.checked) {
-        menu.style.borderBottomRightRadius = '15px';
-        menu.style.borderBottomLeftRadius = '15px';
+    
+    if (menu) {
+        menu.classList.remove('animate__animated', 'animate__fadeIn', 'animate__fadeIn');
+        void menu.offsetWidth;
+        if (clickedCheckbox.checked) {
+            menu.classList.add('animate__animated', 'animate__fadeIn');
+            menu.style.borderBottomRightRadius = '15px';
+            menu.style.borderBottomLeftRadius = '15px';
+        } else {
+            menu.classList.add('animate__animated', 'animate__fadeIn');
+            menu.style.borderRadius = '15px';
+        }
     } else {
-        menu.style.borderRadius = '15px';
+        console.error('Menu element not found');
     }
 }
 
-document.addEventListener('click', function(event) {
-    const menu = document.getElementById('menu');
-    const checkboxes = document.querySelectorAll('nav input[type="checkbox"]');
-
-    if (!menu.contains(event.target)) {
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                checkbox.checked = false;
-                menu.style.borderRadius = '15px';
-            }
-        });
-    }
-});
-
-function showPage(page) {
-    document.querySelectorAll('.container, .converter-container, .car-calculator-container').forEach(container => {
-        container.style.display = 'none';
-    });
-    document.getElementById(page).style.display = 'flex';
-    document.getElementById('responsive-menu').checked = false;
-    const menu = document.getElementById('menu');
-    menu.style.borderRadius = '15px';
-}
-
-function toggleIcon(element) {
-    const triangle = element.querySelector('.triangle');
-    const collapseElement = document.getElementById(element.getAttribute('aria-controls'));
-    const container = collapseElement.closest('.converter-container');
-
-    if (collapseElement.classList.contains('show')) {
-        triangle.innerHTML = '&#9654;'; // Right-pointing triangle
-        container.classList.add('collapsed');
-    } else {
-        triangle.innerHTML = '&#9660;'; // Down-pointing triangle
-        container.classList.remove('collapsed');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.converter-container').forEach(container => {
-        container.classList.add('initial');
-    });
-});
-
-var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-var collapseList = collapseElementList.map(function (collapseEl) {
-  return new bootstrap.Collapse(collapseEl, {
-    toggle: false
-  })
-})

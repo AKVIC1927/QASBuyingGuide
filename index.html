@@ -1,177 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price Calculator and Converters</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>
-    <script src="https://unpkg.com/@swup/fade-theme@latest/dist/swup-fade-theme.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> <!-- jQuery -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
-    <script src="scripts.js" defer></script>
-</head>
-<body>
-    <div id="swup" class="transition-fade"> 
-        <nav id='menu'>
-            <input type='checkbox' id='responsive-menu' onclick='toggleMenu("responsive-menu")'>
-            <label for='responsive-menu'></label>
-            <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="Buying Guidelogo.png" alt="logo" id="BG"></div>
-            <ul>
-                <li><a href="#" onclick="showPage('calculator')">CAD Selling Price Calculator</a></li>
-                <li><a href="#" onclick="showPage('converter')">Converter</a></li>
-                <li id="PCB"><a id="PCB" href="#" onclick="showPage('carCalculator')">USD Selling Price Calculator</a></li>
-            </ul>
-            <div id="logo-container" href="#" onclick="showPage('calculator')"><img src="QASWHITELOGO.png" alt="logo" id="logo"></div>
-        </nav> 
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-    <div class="content">
-        <div class="container" id="calculator">
-            <div class="form-container">
-                <div class="form-group">
-                    <label for="vin">VIN</label>
-                    <input type="text" id="vin" maxlength="7" placeholder="To Save Enter Last 6" oninput="formatVin()" inputmode="numeric" pattern="[0-9]*" onkeypress="return isNumberKey(event)" style="text-transform:uppercase">
-                </div>
-                <div class="form-group">
-                    <label for="usdPrice">USD Selling Price</label>
-                    <div class="input-container">
-                        <input type="text" id="usdPrice" value="$ 0" inputmode="numeric" oninput="formatAndCalculate('usdPrice')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementInput('usdPrice', 100)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementInput('usdPrice', -100)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="exchangeRate">FX Rate (CAD to USD)</label>
-                    <div class="input-container">
-                        <input type="number" id="exchangeRate" step="0.01" value="1.36" inputmode="numeric" oninput="calculateCadPrice()" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementInput('exchangeRate', 0.01)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementInput('exchangeRate', -0.01)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="expenses">Expenses</label>
-                    <div class="input-container">
-                        <input type="text" id="expenses" value="$ 6 000" inputmode="numeric" oninput="formatAndCalculate('expenses')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementInput('expenses', 250)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementInput('expenses', -250)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="profit">Desired Profit</label>
-                    <div class="input-container">
-                        <input type="text" id="profit" value="$ 0" inputmode="numeric" oninput="formatAndCalculate('profit')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementInput('profit', 250)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementInput('profit', -250)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cadPrice">CAD BUYING PRICE</label>
-                    <input type="text" id="cadPrice" readonly>
-                </div>
-                <div class="actions">
-                    <button class="cancel-btn" onclick="resetForm()">Reset</button>
-                    <button class="save-btn" onclick="saveEntry()">Save</button>
-                </div>
-            </div>
-        </div>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-        <!-- KM to Miles Converter Page -->
-        <div class="converter-container" id="converter">
-            <!-- KM to Miles Converter -->
-            <div class="KMTOMILES">
-                <h2>
-                    <a data-toggle="collapse" href="#kmCollapse" role="button" aria-expanded="false" aria-controls="kmCollapse" 
-                    onclick="toggleIcon(this)"><span class="triangle">&#9654;</span> KM to Miles</a>
-                </h2>
-                <div class="collapse" id="kmCollapse">
-                    <div class="input-container">
-                        <input type="text" id="kmInput" placeholder="0" inputmode="numeric" oninput="convertKmToMiles()" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementKm(10)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementKm(-10)">▼</div>
-                    </div>
-                    <p id="milesOutput">Miles: 0</p>
-                </div>
-            </div>
-        
-            <!-- KG to Pounds Converter -->
-            <div class="KGTOLBS">
-                <h2>
-                    <a data-toggle="collapse" href="#kgCollapse" role="button" aria-expanded="false" aria-controls="kgCollapse" 
-                    onclick="toggleIcon(this)"> <span class="triangle">&#9654;</span> KG to Pounds</a>
-                </h2>
-                <div class="collapse" id="kgCollapse">
-                    <div class="input-container">
-                        <input type="text" id="KgInput" placeholder="0" inputmode="numeric" oninput="convertKgToLbs()" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementKg(10)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementKg(-10)">▼</div>
-                    </div>
-                    <p id="LBSOutput">Pounds: 0</p>
-                </div>
-            </div>
-        </div>
-        
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-        <!-- Car Buying Calculator Page -->
-        <div class="car-calculator-container" id="carCalculator">
-            <div class="car-calculator-form-container">
-                <div class="form-group">
-                    <label for="cadBoughtPrice">CAD Bought Price</label>
-                    <div class="input-container">
-                        <input type="text" id="cadBoughtPrice" value="$ 0" inputmode="numeric" oninput="formatAndCalculateCar('cadBoughtPrice')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementCarInput('cadBoughtPrice', 100)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementCarInput('cadBoughtPrice', -100)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="desiredProfit">Desired Profit</label>
-                    <div class="input-container">
-                        <input type="text" id="desiredProfit" value="$ 0" inputmode="numeric" oninput="formatAndCalculateCar('desiredProfit')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementCarInput('desiredProfit', 100)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementCarInput('desiredProfit', -100)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Expenses2">Expenses</label>
-                    <div class="input-container">
-                        <input type="text" id="Expenses2" value="$ 0" inputmode="numeric" oninput="formatAndCalculateCar('Expenses2')" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementCarInput('Expenses2', 100)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementCarInput('Expenses2', -100)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="fxRate">FX Rate (CAD to USD)</label>
-                    <div class="input-container">
-                        <input type="number" id="fxRate" step="0.01" value="1.36" inputmode="numeric" oninput="calculateUsdSellingPrice()" onkeypress="return isNumberKey(event)">
-                        <div class="spinner-button spinner-up" onclick="incrementCarInput('fxRate', 0.01)">▲</div>
-                        <div class="spinner-button spinner-down" onclick="incrementCarInput('fxRate', -0.01)">▼</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="usdSellingPrice">USD Selling Price</label>
-                    <input type="text" id="usdSellingPrice" readonly>
-                </div>
-                <div class="actions">
-                    <button class="cancel-btn" onclick="resetCarForm()">Reset</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="last-entries">
-        <h3>Last 6 Entries</h3>
-        <table id="entriesTable" style="text-transform:uppercase">
-            <thead>
-                <tr>
-                    <th>Last 6 VIN</th>
-                    <th>USD PRICE</th>
-                    <th>CAD PRICE</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-            </tbody>
-        </table>
-    </div>
-</body>
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>

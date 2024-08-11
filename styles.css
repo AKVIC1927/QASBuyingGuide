@@ -1,4 +1,3 @@
-/* Existing CSS */
 body {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
@@ -10,19 +9,13 @@ body {
     flex-direction: column;
 }
 
-#swup{
-    display: grid;
-}
-
 #menu {
     background: #3663A0;
     height: 40px;
     border-radius: 15px;
     display: flex;
     width: max-content;
-    max-width: 100vw;
 }
-
 #menu ul, #menu li {
     margin: 0 auto;
     padding: 0;
@@ -61,14 +54,14 @@ body {
     padding: 0;
     height: 40px;
     opacity: 0;
-    cursor: pointer
+    cursor: pointer;
 }
 #menu label {
     display: none;
     line-height: 40px;
     text-align: center;
     position: absolute;
-    left: 35px
+    left: 35px;
 }
 #menu label:before {
     font-size: 1.6em;
@@ -76,10 +69,10 @@ body {
     content: "\2261"; 
     margin-left: 10px;
 }
-#menu ul.sub-menus{
+#menu ul.sub-menus {
     height: auto;
     overflow: hidden;
-    width: 100vw;
+    width: 170px;
     background: #3663A0;
     position: absolute;
     z-index: 99;
@@ -95,30 +88,23 @@ body {
     font-size: 16px;
 }
 #menu li:hover ul.sub-menus {
-    display: block
+    display: block;
 }
-#menu ul.sub-menus a:hover{
+#menu ul.sub-menus a:hover {
     background: #F2F2F2;
     color: #3663A0;
 }
-
-#KMTOMILES {
-    width: 100%;
-}
-
-
-@media screen and (max-width: 900px){
-    #swup {display: grid;}
-    #menu {position:relative;border-radius: 15px; justify-self:center;}
+@media screen and (max-width: 800px) {
+    #menu {position:relative;border-radius: 15px;}
     #menu ul {background:#3663A0;top:100%;right:0;left:0;z-index:3;height:auto;display:none;text-align:left;}
     #menu ul.sub-menus {background:#3663A0;width:100%;position:static;}
     #menu ul.sub-menus a {background:#3663A0;padding-left:30px;}
     #menu li {display:block;float:none;width:auto;}
-    #menu input, #menu label {top:0;left:0;display:block}
-    #menu input {z-index:4}
-    #menu input:checked + label {color:#FFFFFF}
-    #menu input:checked + label:before {content:"\00d7"}
-    #menu input:checked ~ ul {display:block}
+    #menu input, #menu label {top:0;left:0;display:block;}
+    #menu input {z-index:4;}
+    #menu input:checked + label {color:#FFFFFF;}
+    #menu input:checked + label:before {content:"\00d7";}
+    #menu input:checked ~ ul {display:block;}
     #BG {display: none;}
     #logo { margin-left: 0;}
     #PCB {
@@ -130,19 +116,11 @@ body {
 #logo {
     border-radius: 10px;
     height: 40px;
-    
-}
-
-a {
-    color: white;
-    display: flex;
-    align-items: center;
 }
 
 #BG {
     border-radius: 10px;
     height: 40px;
-    
 }
 
 .content {
@@ -150,10 +128,10 @@ a {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-height: 80vh; /* Max height set to 80% of the viewport height */
-    margin-top: 20px; /* Adjusted for navbar height */
+    max-height: 80vh;
+    margin-top: 20px;
     box-sizing: border-box;
-    overflow-y: auto; /* Allows scrolling if content exceeds the max height */
+    overflow-y: auto;
 }
 
 .container,
@@ -164,11 +142,12 @@ a {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80vw;
-    max-width: 900px;
+    max-width: 400px;
     box-sizing: border-box;
-    display: none; 
+    display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .form-container,
@@ -185,7 +164,7 @@ a {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    font-size: 1rem; /* Responsive font size */
+    font-size: 1rem;
 }
 
 .form-group .input-container {
@@ -200,10 +179,10 @@ a {
     border: 1px solid #ccc;
     border-radius: 4px;
     display: inline-block;
-    -webkit-appearance: none; /* Override default appearance */
+    -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    font-size: 1rem; /* Responsive font size */
+    font-size: 1rem;
 }
 
 .form-group input[readonly] {
@@ -266,7 +245,6 @@ a {
 }
 
 .last-entries {
-    justify-self: center;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -310,18 +288,10 @@ a {
     margin-top: 20px;
 }
 
-.converter-container.initial {
-    width: max-content;
-}
-
-.converter-container.collapsed {
-    width: max-content;
-}
-
 .converter-container label {
     display: block;
     margin-bottom: 5px;
-    font-size: 1rem; /* Responsive font size */
+    font-size: 1rem;
 }
 
 .converter-container .input-container {
@@ -339,14 +309,10 @@ a {
     border: 1px solid #ccc;
     border-radius: 4px;
     display: inline-block;
-    -webkit-appearance: none; /* Override default appearance */
+    -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    font-size: 1rem; /* Responsive font size */
-}
-
-#milesOutput, #LBSOutput {
-    margin: 1rem;
+    font-size: 1rem;
 }
 
 .car-calculator-container {
@@ -362,7 +328,7 @@ a {
 .car-calculator-container label {
     display: block;
     margin-bottom: 5px;
-    font-size: 1rem; /* Responsive font size */
+    font-size: 1rem;
 }
 
 .car-calculator-container .input-container {
@@ -380,10 +346,10 @@ a {
     border: 1px solid #ffffff;
     border-radius: 4px;
     display: inline-block;
-    -webkit-appearance: none; /* Override default appearance */
+    -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    font-size: 1rem; /* Responsive font size */
+    font-size: 1rem;
 }
 
 ::placeholder {
@@ -419,14 +385,14 @@ a {
     border-radius: 0 0 4px 0;
 }
 
-
-.KMTOMILES {
-    display: inline-flex;
-    flex-direction: column;
-}
-
-.triangle {
-    font-size: 0.5em;
-    margin-left: 5px;
-    margin-right: 5px;
+@media (min-width: 768px) {
+    .container,
+    .converter-container,
+    .car-calculator-container {
+        flex-direction: row;
+    }
+    .form-container {
+        margin-right: 20px;
+        width: 55%;
+    }
 }
