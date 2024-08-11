@@ -1,12 +1,12 @@
 const cacheName = 'v1';
 const cacheAssets = [
     '/',
-    '/index.html',
-    '/styles.css',
-    '/scripts.js',
-    '/manifest.json', // or /site.webmanifest
-    '/icons/android-chrome-192x192.png',
-    '/icons/android-chrome-384x384.png'
+    'index.html',
+    'styles.css',
+    'scripts.js',
+    'manifest.json', // or /site.webmanifest
+    'icons/android-chrome-192x192.png',
+    'icons/android-chrome-384x384.png'
 ];
 
 self.addEventListener('install', e => {
