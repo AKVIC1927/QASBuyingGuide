@@ -1,13 +1,16 @@
+
+
 const cacheName = 'v1';
 const cacheAssets = [
-    '/',
-    'index.html',
-    'styles.css',
-    'scripts.js',
-    'manifest.json', // or /site.webmanifest
-    'icons/android-chrome-192x192.png',
-    'icons/android-chrome-384x384.png'
+    '/QASBuyingGuide/',
+    '/QASBuyingGuide/index.html',
+    '/QASBuyingGuide/styles.css',
+    '/QASBuyingGuide/scripts.js',
+    '/QASBuyingGuide/manifest.json',
+    '/QASBuyingGuide/icons/android-chrome-192x192.png',
+    '/QASBuyingGuide/icons/android-chrome-384x384.png'
 ];
+
 
 self.addEventListener('install', e => {
     e.waitUntil(
