@@ -1,45 +1,15 @@
-const apiKey = '3affe54e205fe5a146a1fcd4';
+
 
 calculateCadPrice();
 showPage('calculator'); 
 
-async function fetchExchangeRate(fromCurrency, toCurrency) {
-    const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency}?apikey=${apiKey}`;
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const rate = data.rates[toCurrency];
-        return rate;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
-        return null; // Return null or a default value if the API call fails
-    }
-}
-
-async function calculateCadPrice() {
+function calculateCadPrice() {
     const usdPrice = parseFormattedNumber(document.getElementById('usdPrice').value) || 0;
+    const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 0;
     const expenses = parseFormattedNumber(document.getElementById('expenses').value) || 0;
     const profit = parseFormattedNumber(document.getElementById('profit').value) || 0;
-
-    let exchangeRate = await fetchExchangeRate('USD', 'CAD');
-    if (!exchangeRate) {
-        exchangeRate = 1.36; // Fallback exchange rate in case of error
-    }
-
     const cadPrice = Math.ceil((usdPrice * exchangeRate) - (expenses + profit));
     document.getElementById('cadPrice').value = formatNumber(cadPrice);
-}
-
-async function updateExchangeRateDisplay() {
-    let exchangeRate = await fetchExchangeRate('USD', 'CAD');
-    if (!exchangeRate) {
-        exchangeRate = 1.36; // Fallback exchange rate in case of error
-    }
-    document.getElementById('exchangeRate').value = exchangeRate.toFixed(2);
 }
 
 updateExchangeRateDisplay();
